@@ -1,5 +1,8 @@
 import React from 'react';
 import Hidden from './Hidden.jsx';
+import axios from 'axios';
+import DropdownButton from 'react-bootstrap';
+
 
 class TopBar extends React.Component{
 	constructor(props) {
@@ -22,24 +25,36 @@ class TopBar extends React.Component{
       })
     }
   }
-
+  
+  /*
+  Redirects to new page which is pretty much like creating a new trip.
+  */
   createNewTrip() {
-
+  	axios.get('/')
+  		.then(res => {
+  			console.log(res);
+  		})
+  		.catch(err => {
+  			console.log(err);
+  		})
   }
 
 	render(){
-		let savedTags = this.props.savedTags.map((tag) => {
-		if (this.state.showDiv === true) {
-			return <Hidden tag={tag} tagClicked={this.props.tagClicked}/>
+		let savedTags = this.props.savedTags.map((tag, i) => {
+    if (this.state.showDiv === true) {
+			return <Hidden tag={tag} tagClicked={this.props.tagClicked} key={i} />
 			}
 		})
-		return <div class="topBar">
-			<button onClick={this.createNewTrip}> Create New Trip</button>
-	    <button onClick={this.showSavedTags}>savedTrip</button>
-	    {savedTags}
-	    <button>Profile</button>	    
-    </div>
-	}
+		return ( 
+			<div className="topBar">
+        <ul>
+  			  <li onClick={this.createNewTrip}> <h4> Create New Trip </h4> </li>
+  	   	  <li onClick={this.showSavedTags}> <h4> Saved Trip </h4> </li>
+        </ul>
+        <div className="hiddenTags">
+          {savedTags}	
+        </div>    
+      </div>
+	  )}
 }
-
 export default TopBar;

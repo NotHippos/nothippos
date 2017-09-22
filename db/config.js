@@ -9,4 +9,4 @@ db.once('open', function() {
 
 mongoose.connect('mongodb://hippo:hippo@ds141524.mlab.com:41524/destinations_hippo');
 
-module.exports = db
+module.exports = db;

@@ -2,66 +2,94 @@ const express = require('express');
 const router = express.Router();
 const City = require('./db/citySchema');
 const User = require('./db/userSchema');
+var app = express();
+var bodyParser = require('body-parser')
 
 
+// router.get('/', function(req, res) {
+//   res.redirect('/#/');
+// });
 
-router.get('/', function(req, res) {
-  res.redirect('/#/');
-});
+
 
 router.get('/login',function(req, res) {
-  res.redirect('/#/login');
+  res.redirect('/#/login'); 
 });
 
-router.get('/savedTrips', function(req, res) {
-  // User.find({}, function(error, tripName) {
-  //   console.log(tripName)
-  //   if (error) {
-  //     console.log(error);
-  //   } 
-  // }).then((tripName) => {
-  //   res.send(tripName);
-  // });
+router.get('/tagList', function(req, res) {
+  var session = req.session.passport;
+  User.find({'user': session.user.id})
+    .then(result => {
+      res.send(result[0].tripTags)
+    })
 });
 
+
+router.get('/savedTrips', function(req, res) { 
+  var session = req.session.passport; 
+  var seek = req.query.tag
+  City.find({'tag': seek, 'user': session.user.id})
+    .then(result => {  
+      res.send(result) 
+    })
+});
+
+router.get('/deleteCity', function(req, res) {
+  var session = req.session.passport;
+  var cityName = req.query.cityName;
+  var tripName = req.query.tripTag;
+  // console.log('user', session.user.id, 'tag', tripName, 'cityName', cityName)
+  City.remove({'tag': tripName, 'cityName': cityName, 'user': session.user.id}, function (error) {
+      if (error) {
+        console.log(error);
+      }
+  })
+});
 
 router.post('/saveNewTrip', function(req, res) {
-  // console.log(req.body)
+  var session = req.session.passport;
   let err;
 
   req.body.currentCities.forEach((city) => {
-    
       City.create({
         tag: req.body.tags,
-        // user: ,
-        locationName: city.locationName,
-        arrivalDate: city.dateOfArrival,
-        departureDate: city.dateOfDeparture
+        user: session.user.id,
+        cityName: city.locationName,
+        dateOfArrival: city.dateOfArrival,
+        dateOfDeparture: city.dateOfDeparture,
+        events: city.events
       }).then((error) => {
         if (error) {
           err = error;
         }
+      })
+  })
+
+  User.findOne({'user': session.user.id}, function(err, data) {
+    if (err) {
+    } else if (!data) {
+      User.create({
+        user: session.user.id
       });
-  });
+    } else if (data) {
+      var tempTripTags = data.tripTags;
+      tempTripTags.push(req.body.tags);
+
+      data.save(error => {
+        if (error) {
+          err = error;
+        } else {
+          User.tripTags = tempTripTags;          
+        }
+      })
+    }
+  })
 
   if (err) {
-    res.sendStatus(404);
+    res.sendStatus(400);
   } else {
-    res.redirect(201, '/viewTrip');
-  }
-
-  // User.create({
-  //   // user: user,
-  //   tripTags.push(req.body.tags);
-  //   tripTags: tripTags;
-  // }).then((error, trips) => {
-  //   if (error) {
-  //     console.log(error);
-  //     res.sendStatus(400);
-  //   } else {
-  //     res.sendStatus(201);
-  //   }
-  // });
+    res.redirect(201, '/#/viewTrip');
+  } 
 });
 
 

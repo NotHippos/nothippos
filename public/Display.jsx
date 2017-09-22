@@ -1,9 +1,31 @@
 import React from 'react';
-const Displayed = (props) => {
-	return <div>
-		<h1>{props.city.locationName}</h1>
-		<ul>{props.city.dateOfArrival}</ul>
-		<ul>{props.city.dateOfDeparture}</ul>
-	</div>			
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
+
+export default class Displayed extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+
+
+    }
+    this.changeValue = this.changeValue.bind(this);
+  }
+  changeValue () {
+    this.props.changeCurrentEditCity(this.props.idx);
+  }
+
+
+  render() {
+    return (
+      <div>
+          <Link to={`/home/edit`}>
+            <h4 onClick={this.changeValue}>{this.props.city.locationName}</h4>
+          </Link>
+      </div>
+    )
+  }
 }
-export default Displayed;
