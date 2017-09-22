@@ -17,7 +17,7 @@ export default class CityEditView extends React.Component {
     return (
         <div className="cityEditView">
           <MapWithADirectionsRenderer zoom={this.props.zoom} mapCenter={this.props.mapCenter} cityMarkers={this.props.cityMarkers} googleMapURL={this.state.googleMapURL} />
-          <CityEventEntryEditor saveEvent={this.props.saveEvent} createNewEvent={this.props.createNewEvent} currentEditCity={this.props.currentEditCity}/>
+          <CityEventEntryEditor deleteCity={this.props.deleteCity} saveEvent={this.props.saveEvent} createNewEvent={this.props.createNewEvent} currentEditCity={this.props.currentEditCity}/>
         </div>
       
   )}

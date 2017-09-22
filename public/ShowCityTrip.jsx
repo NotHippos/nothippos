@@ -22,7 +22,7 @@ export default class ShowCityTrip extends React.Component {
     return (
       <Col sm={7} md={8}>
         <div>
-            <TopBar savedTags={this.props.savedTags} tagClicked={this.props.tagClicked}/>
+            <TopBar savedTags={this.props.savedTags} tagClicked={this.props.tagClicked} createNewTrip={this.props.createNewTrip} />
             <SeeAllCities zoom={this.props.zoom} mapCenter={this.props.mapCenter} currentCities={this.props.currentCities} tags={this.props.tags} 
             cityMarkers={this.props.cityMarkers}/>
         </div>

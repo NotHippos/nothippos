@@ -10,6 +10,10 @@ var bodyParser = require('body-parser')
 //   res.redirect('/#/');
 // });
 
+router.get('/createNewTrip', (req, res) => {
+  console.log("getting it");
+  res.redirect('/#/home')
+})
 
 
 router.get('/login',function(req, res) {

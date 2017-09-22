@@ -12,6 +12,7 @@ class TopBar extends React.Component{
 		}
 	this.showSavedTags = this.showSavedTags.bind(this);
 	this.tagClicked = this.props.tagClicked.bind(this);
+  this.createNewTrip = this.createNewTrip.bind(this);
 	}
 
 	showSavedTags () {
@@ -30,13 +31,7 @@ class TopBar extends React.Component{
   Redirects to new page which is pretty much like creating a new trip.
   */
   createNewTrip() {
-  	axios.get('/')
-  		.then(res => {
-  			console.log(res);
-  		})
-  		.catch(err => {
-  			console.log(err);
-  		})
+  	this.props.createNewTrip()
   }
 
 	render(){

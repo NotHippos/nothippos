@@ -14,6 +14,11 @@ export default class CityEventEntryEditor extends React.Component {
     this.state = {
       show: false
     }
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  handleDelete () {
+    this.props.deleteCity();
   }
 
   componentDidUpdate (prevProps, prevState) {
@@ -36,9 +41,9 @@ export default class CityEventEntryEditor extends React.Component {
         <Link to={`/home`}>
           <Button className="returnToTrip"> Return To Trip Overview </Button>
         </Link>
-        <Button className="returnToTrip" onClick={this.props.deleteCity}> Delete This City </Button>
+        <Button className="returnToTrip" onClick={this.handleDelete}> Delete This City </Button>
         <br/>
-        
+
         {events}
 
         <Button className="createNewEventButton" onClick={this.props.createNewEvent}> Create New Event </Button>
