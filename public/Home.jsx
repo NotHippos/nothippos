@@ -10,11 +10,22 @@ import axios from 'axios';
 import querystring from 'querystring';
 import style from './style.css';
 import {
+<<<<<<< HEAD
   BrowserRouter as Router,
   Route,
   Link,
   location
 } from 'react-router-dom'
+=======
+  withScriptjs,
+  withGoogleMap,
+  withPolyline,
+  GoogleMap,
+  Marker,
+  Polyline
+} from "react-google-maps";
+var polyCoordinates = [];
+>>>>>>> polylines
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -27,6 +38,7 @@ export default class Home extends React.Component {
       },
       savedTags: [],
       cityMarkers: [],
+<<<<<<< HEAD
       worldCenter: {
         lat: 41.9, lng: -87.624
       },
@@ -35,6 +47,10 @@ export default class Home extends React.Component {
         lat: 41.9, lng: 87.624
       },
       cityZoom: 10
+=======
+      coords:[],
+      polyCoordinates: []
+>>>>>>> polylines
     }
     this.addCity = this.addCity.bind(this);
     this.addTags = this.addTags.bind(this);
@@ -54,15 +70,17 @@ export default class Home extends React.Component {
     }
     var currentMarkers = this.state.cityMarkers;
     currentMarkers.push(newMarker);
+    //pushes position to an array in order to render polyLine later
+    polyCoordinates.push(position);
     this.setState({
-      cityMarkers: currentMarkers
+      cityMarkers: currentMarkers,
+      coords: polyCoordinates
     })
   }
 
   componentDidMount() {
     axios.get('/api/tagList')
       .then(res => {
-        console.log(res)
         this.setState({
           savedTags: res.data
       })
@@ -76,7 +94,6 @@ export default class Home extends React.Component {
       currentEditCity: temp,
       currentCityCenter: temp.latLng
     })
-    console.log(this.state);
   }
 
   createNewEvent () {
@@ -94,7 +111,6 @@ export default class Home extends React.Component {
     this.setState ({
       currentEditCity: tempCurrentEditCity
     })
-    console.log(this.state.currentEditCity);
   }
 
   deleteCity() {
@@ -144,7 +160,6 @@ export default class Home extends React.Component {
     this.setState ({
       currentEditCity: city
     })
-    console.log(this.state.currentEditCity);
 
   }
 
@@ -176,14 +191,12 @@ export default class Home extends React.Component {
     this.setState ({
       currentCities: tempCities
     })
-    console.log(this.state);
   }
 
   addTags (tripName) {
     this.setState ({
       tags: tripName
     })
-    console.log(this.state);
   }
 
   saveNewTrips() {
@@ -231,7 +244,10 @@ export default class Home extends React.Component {
       }
     })
     .then(res => {
+<<<<<<< HEAD
       console.log(res, 'RES')
+=======
+>>>>>>> polylines
       var temp = [];
       for (var i = 0; i < res.data.length; i++) {
         if (res.data[i].cityName !== undefined) {
@@ -251,7 +267,6 @@ export default class Home extends React.Component {
   }
 
   render() {
-
     return (
       <div>
         <WebsiteName/>
@@ -268,11 +283,15 @@ export default class Home extends React.Component {
             <ShowCityTrip zoom={this.state.worldZoom} mapCenter={this.state.worldCenter} currentCities={this.state.currentCities} tags={this.state.tags} cityMarkers={this.state.cityMarkers} savedTags={this.state.savedTags} 
             tagClicked={this.tagClicked}
           />
+<<<<<<< HEAD
         )}/>
 
           
 
       
+=======
+        <EditPlanDisplay coords={this.state.coords} cityMarkers={this.state.cityMarkers} saveEvent={this.saveEvent} createNewEvent={this.createNewEvent} savedTags={this.state.savedTags} tagClicked={this.tagClicked} currentEditCity={this.state.currentEditCity}/>
+>>>>>>> polylines
       </div>
     )
   }

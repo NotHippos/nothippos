@@ -12,13 +12,13 @@ export default class CityEditView extends React.Component {
 
     }
   }
-  
+
   render() {
     return (
         <div className="cityEditView">
-          <MapWithADirectionsRenderer zoom={this.props.zoom} mapCenter={this.props.mapCenter} cityMarkers={this.props.cityMarkers} googleMapURL={this.state.googleMapURL} />
+          <MapWithADirectionsRenderer coords={this.props.coords} zoom={this.props.zoom} mapCenter={this.props.mapCenter} cityMarkers={this.props.cityMarkers} googleMapURL={this.state.googleMapURL} />
           <CityEventEntryEditor saveEvent={this.props.saveEvent} createNewEvent={this.props.createNewEvent} currentEditCity={this.props.currentEditCity}/>
         </div>
-      
+
   )}
 }
