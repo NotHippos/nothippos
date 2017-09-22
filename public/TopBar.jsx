@@ -46,7 +46,7 @@ class TopBar extends React.Component{
 		return ( 
 			<div className="topBar">
 			  <button onClick={this.createNewTrip}> Create New Trip</button>
-	   	  <button onClick={this.showSavedTags}>savedTrip</button>
+	   	  <button onClick={this.showSavedTags}>SavedTrip</button>
 	      {savedTags}
 	      <button>Profile</button>	    
       </div>

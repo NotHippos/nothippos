@@ -5,7 +5,6 @@ import TopBar from './TopBar.jsx';
 import Hidden from './Hidden.jsx';
 import EditPlanDisplay from './EditPlanDisplay.jsx';
 import axios from 'axios';
-import querystring from 'querystring';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -16,8 +15,7 @@ export default class Home extends React.Component {
       currentEditCity: {
         events: []
       },
-      savedTags: ['hi', 'hello'],
-      cityMarkers: []
+      savedTags: ['What Do You Want']
     }
     this.addCity = this.addCity.bind(this);
     this.addTags = this.addTags.bind(this);
@@ -26,19 +24,6 @@ export default class Home extends React.Component {
     this.changeCurrentEditCity = this.changeCurrentEditCity.bind(this);
     this.createNewEvent = this.createNewEvent.bind(this);
     this.saveEvent = this.saveEvent.bind(this);
-    this.changeCityMarkers = this.changeCityMarkers.bind(this);
-  }
-
-  changeCityMarkers (location, position) {
-    var newMarker = {
-      cityName: location,
-      position: position
-    }
-    var currentMarkers = this.state.cityMarkers;
-    currentMarkers.push(newMarker);
-    this.setState({
-      cityMarkers: currentMarkers
-    })
   }
 
   componentDidMount() {
@@ -65,7 +50,7 @@ export default class Home extends React.Component {
       date: '',
       time: '',
       location: '',
-      notes: '',
+      notes: ''
     }
     var tempCurrentEditCity = this.state.currentEditCity;
     var tempEvents = tempCurrentEditCity.events;
@@ -115,12 +100,11 @@ export default class Home extends React.Component {
 
   }
 
-  addCity (locationName, dateOfArrival, dateOfDeparture, latLng) {
+  addCity (locationName, dateOfArrival, dateOfDeparture) {
     var city = {
       locationName: locationName,
       dateOfArrival: dateOfArrival,
       dateOfDeparture: dateOfDeparture,
-      latLng: latLng,
       events: [
         {
           activityName: 'Arrival',
@@ -179,21 +163,22 @@ export default class Home extends React.Component {
 
   tagClicked(clickedit) {
     axios({
-  method: "get",
+      method: "get",
       url: "/api/savedTrips",
       params:{
         tag: clickedit
       }
     })
     .then(res => {
-      console.log(res)
       var temp = [];
-      var tempObj = {};
-      for (var i = 0; i < res.data.length; i++) {
-        tempObj.locationName = res.data.cityName;
-        tempObj.dateOfArrival = res.data.dateOfArrival;
-        tempObj.dateOfDeparture = res.data.dateOfDeparture;
-        temp.push(tempObj)
+      for (var i = 0; i < res.data.length; i++) {  
+        if (res.data[i].cityName !== undefined) {
+          var tempObj = {};
+          tempObj.locationName = res.data[i].cityName;
+          tempObj.dateOfArrival = res.data[i].dateOfArrival;
+          tempObj.dateOfDeparture = res.data[i].dateOfDeparture;
+          temp.push(tempObj)
+        }
       }
       this.setState({
         currentCities: temp,
@@ -206,10 +191,11 @@ export default class Home extends React.Component {
 
     return (
       <div>
-        <InputBar changeCityMarkers={this.changeCityMarkers} addCityToParent={this.addCity} addTagsToParent={this.addTags}
-          saveNewTrips={this.saveNewTrips} currentCities={this.state.currentCities} changeCurrentEditCity={this.changeCurrentEditCity}
+        <InputBar addCityToParent={this.addCity} addTagsToParent={this.addTags}
+          saveNewTrips = {this.saveNewTrips} currentCities={this.state.currentCities} changeCurrentEditCity={this.changeCurrentEditCity}
           />
-        <EditPlanDisplay cityMarkers={this.state.cityMarkers} saveEvent={this.saveEvent} createNewEvent={this.createNewEvent} savedTags={this.state.savedTags} tagClicked={this.tagClicked} currentEditCity={this.state.currentEditCity}/>
+        <EditPlanDisplay saveEvent={this.saveEvent} createNewEvent={this.createNewEvent} savedTags={this.state.savedTags} tagClicked={this.tagClicked} currentEditCity={this.state.currentEditCity}/>
+        <Hidden tagClicked={this.tagClicked} tags={this.state.tags} />
       </div>
     )
   }
