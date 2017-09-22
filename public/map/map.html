@@ -2,6 +2,7 @@
 <h3>HippoMap</h3>
 <div id="map"></div>
 <!-- <link rel="stylesheet" href="/map.css"> -->
+<!-- Set up style to paste map on page -->
 <style>
 #map {
   height: 400px;
@@ -10,6 +11,11 @@
 </style>
 <script src = 'map.js'> </script>
 
+<!-- 'http -> key =' is google api for map. long random number ending at 'Map' is the api key and Mapinit
+'&libraries=places' sets up to allow the autocomplete function with places -->
 <script async defer
-src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDvgO7kKFpb6Fo9FHcFfAIIcO4HMERU1fU&callback=initMap">
+src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDvgO7kKFpb6Fo9FHcFfAIIcO4HMERU1fU&callback=initMap&libraries=places">
 </script>
+<!-- below is needed for autocomplete -->
+<input type="text" id="autocomplete">
+<div id="map"></div>

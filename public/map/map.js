@@ -13,34 +13,68 @@ function initMap() {
   var austin = {lat: 30.2672, lng: -97.7431};
 
   var coordsForPolyline = [];
+  var cityEvents = [];
   var options = {
   zoom: 2,
-  center: {lat: 37.7428, lng: -35.6806} // || coordsForPolyline[coordsForPolyline.length-1]
+  center: {lat: 37.7428, lng: -35.6806}
   };
 
+  //create new instance of map
   var map = new google.maps.Map(document.getElementById('map'), options);
+
+  //Creates Autocomplete feature so we can add places in a city by name and get exact coordinates
+  var autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'));
+  //searches within the bondaries of the current map area first
+  autocomplete.bindTo('bounds', map);
+  var infoWindow = new google.maps.InfoWindow();
+  var marker = new google.maps.Marker({
+  map: map
+  });
+
+  //inserts autocomplete feature
+  google.maps.event.addListener(autocomplete, 'place_changed', function(){
+    infoWindow.close();
+    var place = autocomplete.getPlace();
+    if (place.geometry.viewport) {
+      map.fitBounds(place.geometry.viewport);
+    } else {
+      map.setCenter(place.geometry.location);
+      map.setZoom(8);
+    }
+    marker.setPosition(place.geometry.location);
+    infoWindow.setContent('<div>'+ place.name + '</div>');
+    infoWindow.open(map, marker);
+    google.maps.event.addListener(marker, 'click', function(e) {
+      infoWindow.open(map, marker);
+    })
+    //adds coordinates to a cityEvents array, so we can remove them if we want
+    cityEvents.push({
+      coordinates: place.geometry.location,
+      content: place.name
+    });
+    //then renders array
+    for(var i = 0; i < cityEvents.length; i++){
+      addMarker(cityEvents[i]);
+    }
+  });
+
 
   function getCoordinates( address, callback ) {
     var coords;
     geocoder.geocode({address: address}, function(results, status) {
       if (status === 'OK') {
-        coords_object = results[0].geometry.bounds;
-        //the coordinates are averaged because when only the city is entered,
-        //two sets of coordinates are returned in the geocode object
-        //and the average is closest to the center of the city
-        coords = { lat: (coords_object.f.b + coords_object.f.f) / 2,
-                   lng: (coords_object.b.b + coords_object.b.f) / 2};
+        coords = results[0].geometry.location
         callback(coords)
       } else {
-        alert('Please insert a city located on the planet Earth.', status)
+        alert('Please insert a city located on da planet Earf.', status)
       }
     })
-    return coords; //I don't know that this is actually needed
+    return coords; //I don't think this is actually needed
   }
 
   //click 'Add' --> city coordinates are pushed to markers array, marker is added
   // document.getElementById('WHAT_WE_CALL_OUR_ADD_BUTTON').addEventListener('click', function() {
-    getCoordinates( /*CITY_PULLED_FROM_INPUT_ BOX --> Paris is dummy -->*/'houston, Texas', function(coords) {
+    getCoordinates( /*CITY_PULLED_FROM_INPUT_ BOX --> dummy data -->*/'London, England', function(coords) {
       markers.push({
           coordinates: coords,
           content: '<h1> PULL ME FROM USER INPUT CITYSCHEMA TAGS </h1>'
@@ -59,8 +93,17 @@ function initMap() {
         })
         //set polyline on map
         newTravelPath.setMap(map);
-    })
-  // })
+        map.setCenter(coords);
+        map.setZoom(13);
+  })
+
+     //click city and have map recenter on city
+  // document.getElementById('CITY_LINK').addEventListener('click', function() {
+  //   getCoordinates('CITY_LINK', function(coords) {
+  //     map.setCenter(coords);
+  //     map.setZoom(13);
+  //   })
+  // });
 
   //adds a marker
   function addMarker(props) {
@@ -89,9 +132,13 @@ function initMap() {
       content: '<h1> PULL ME FROM USER INPUT CITYSCHEMA TAGS </h1>'
     },
     {
-      coordinates: houston,
+      coordinates: london,
       content: '<h1> PULL ME FROM USER INPUT CITYSCHEMA TAGS </h1>'
     },
+    {
+      coordinates: hackreact,
+      content: '<h1> PULL ME FROM USER INPUT CITYSCHEMA TAGS </h1>'
+    }
   ];
 
   //push user inputs into markers array --

@@ -16,12 +16,17 @@
     "express": "^4.15.4",
     "express-session": "^1.15.5",
     "google-map-react": "^0.24.0",
+    "google-maps-react": "^1.1.0",
     "mongoose": "^4.11.12",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "react": "^15.6.1",
+    "react-bootstrap": "^0.31.3",
     "react-dom": "^15.6.1",
+    "react-google-maps": "^8.3.0",
+    "react-places-autocomplete": "^5.4.3",
     "react-router-dom": "^4.2.2",
+    "react-toggle-display": "^2.2.0",
     "request": "^2.81.0",
     "request-promise": "^4.2.1",
     "webpack": "^3.6.0"
@@ -31,5 +36,9 @@
     "app"
   ],
   "author": "Hippos",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^0.28.7",
+    "style-loader": "^0.18.2"
+  }
 }
