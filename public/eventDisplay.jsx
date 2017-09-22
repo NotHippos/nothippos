@@ -9,11 +9,9 @@ export default class EventDisplay extends React.Component {
       time: '',
       location: '',
       notes: ''
-
     }
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSaveEvent = this.handleSaveEvent.bind(this);
-
   }
 
   componentDidMount() {
@@ -22,7 +20,7 @@ export default class EventDisplay extends React.Component {
       date: '',
       time: '',
       location: '',
-      notes: '',
+      notes: ''
     })
   }
 
@@ -35,11 +33,11 @@ export default class EventDisplay extends React.Component {
     });
     console.log(this.state);
   }
+
   handleSaveEvent(event) {
     event.preventDefault();
     this.props.saveEvent(this.props.idx, this.state.activityName, this.state.date, this.state.time, this.state.location, this.state.notes);
   }
-
 
   render() {
     return (

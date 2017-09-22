@@ -16,7 +16,6 @@ router.get('/login',function(req, res) {
 
 router.post('/savedTrips', function(req, res) {
   var session = req.session.passport;
-  console.log('TAGS ', req.body)
   City.find({'user': session.user.id,'tag': req.body.tags}, function(error, tripName) {
     console.log('this is the city info for a trip', tripName)
   //   if (error) {
@@ -34,10 +33,10 @@ router.get('/tagList', function(req, res) {
 })
 
 router.get('/savedTrips', function(req, res) {
-  console.log(req.query)
   var seek = req.query.tag
   City.find({'tag': seek})
-    .then(result => {  
+    .then(result => {
+    console.log(result)  
       res.send(result)
     })
 })
