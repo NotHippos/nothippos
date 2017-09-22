@@ -14,7 +14,6 @@
 .topBar li {
     float: left;
     margin-right: 25px;
-    margin-top: 10px;
 }
 
 .topBar li:hover {
@@ -29,8 +28,6 @@
   text-align: left;
   background-color: lightgrey;
   height: 200vh;
-  clear: left;
-  clear: right;
 }
 
 .inputBar input {
@@ -55,12 +52,11 @@
 .hiddenTags {
   float: right;
   text-align: center;
-  margin-top: 54px;
+  margin-top: 30px;
   z-index: 3;
   background-color: lightgrey;
   position: absolute;
-  right: 94px;
-  opacity: 60%;
+  right: 110px;
 }
 
 .editEvent:hover {
@@ -77,17 +73,9 @@
   padding-left: 10px;
   padding-right: 10px;
   padding-bottom: 10px;
-}
 
-.eachCity {
-  padding: 12px;
 }
-
-.allCity {
-  margin-top: 2%;
-  padding-left: 5%;
-  margin-left: 5%;
-}
+<<<<<<< 8f9fc4f24d32cc4993cf1f48ab9159140d38b5bd
 
 .returnToTrip {
   float: right;
@@ -122,3 +110,8 @@
   clear: right;
 }
 
+.login {
+  background: url("https://i.imgur.com/g0OpxHS.jpg");
+  background-size: cover;
+  height: 840px;
+}
