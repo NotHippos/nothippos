@@ -115,7 +115,7 @@ export default class InputBar extends React.Component {
         </form>
         
         <form>
-        <div  className="inputButton">
+        <div className="inputButton">
         <Button type="submit" value="Add" action="#" onClick={this.handleAddCity}>Add</Button>
         <Button type="Submit" onClick={(event) => {
             this.props.saveNewTrips()

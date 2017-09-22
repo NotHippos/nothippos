@@ -75,3 +75,8 @@
   padding-bottom: 10px;
 
 }
+.login {
+  background: url("https://i.imgur.com/g0OpxHS.jpg");
+  background-size: cover;
+  height: 840px;
+}

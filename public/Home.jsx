@@ -46,7 +46,6 @@ export default class Home extends React.Component {
   componentDidMount() {
     axios.get('/api/tagList')
       .then(res => {
-        console.log(res)
         this.setState({
           savedTags: res.data
       })

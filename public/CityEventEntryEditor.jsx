@@ -30,7 +30,6 @@ export default class CityEventEntryEditor extends React.Component {
         <h4> Current City: {this.props.currentEditCity.locationName} </h4>
         <Button onClick={this.props.deleteCity}> Delete </Button>
         <br/>
-        <Button onClick={this.props.deleteCity}> Delete </Button>
         {events}
         <Button onClick={this.props.createNewEvent}> Create New Event </Button> 
       </div>
